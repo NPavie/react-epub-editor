@@ -1,0 +1,57 @@
+.folder-content {
+    list-style: none;
+    margin: 0;
+    padding-left: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    transition:0.3s;
+
+   
+}
+
+.folder {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    transition:0.3s;
+}
+
+.folder-name {
+    margin:0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+}
+
+.folder-name:hover {
+    background-color: #b2cae4;
+    cursor: pointer;
+}
+
+.file:hover {
+    background-color: #b2cae4;
+    cursor: pointer;
+}
+
+
+.file.selected {
+    background-color: #69c;
+    color:#fff;
+
+}
+
+
+
+
+@font-face {
+  font-family: 'File Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/file-icons.woff2') format('woff2'), /* Super Modern Browsers */
+       url('../fonts/file-icons.svg#file-icons') format('svg'); /* Legacy iOS */
+}
+/* See https://github.com/file-icons/icons/blob/master/charmap.md */
+
