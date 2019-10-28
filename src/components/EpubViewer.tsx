@@ -68,13 +68,34 @@ export class EpubViewer extends React.Component<EpubViewerProps, {}>{
     }
 
     renderEpub(node:FileTree){
-        // read the META-INF/container.xml file to retrieve the opf
-        // From the opf file, get the spine
-        // For each "itemref" of the spine
+        
+        if(this.props.epubToRender.size > 0){
+            // read the META-INF/container.xml file to retrieve the opf
+            let containerDataPromise = node.fetchData("META-INF/container.xml");
+            if(containerDataPromise) containerDataPromise.then((containerData) =>{
+                    let data = new TextDecoder("utf-8").decode(containerData);
+                    var fullpathRegex = /.*full-path="([^\"]*)"/g
+                    var matched = fullpathRegex.exec(data);
+                    if(matched){
+                        var packageFile = matched[1];
+
+                        let packagePromise = node.fetchData(packageFile);
+                        if(packagePromise) return packagePromise;
+
+                    }
+
+                }).then((packageData)=>{
+                    let data = new TextDecoder("utf-8").decode(packageData);
+                    console.log(data);
+                });
+            // From the opf file, get the spine
+            // For each "itemref" of the spine
+            //  create a <section id="file.xhtml"> itemref body content </section>
+        }
     }
 
     render(){
-        
+        this.renderEpub(this.props.epubToRender);
         return <p>Please load an epub using the button in the top bar</p>;
     }
 }

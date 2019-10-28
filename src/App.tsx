@@ -110,8 +110,6 @@ function uint8ArrayToBase64(bytes:Uint8Array){
 
 class App extends React.Component{
 
-
-
     state = {
         raw_mode:true,
         drawer_css:["App-drawer"],
@@ -157,7 +155,7 @@ class App extends React.Component{
                 var zip:jszip = new jszip();
                 this.loadingToastId = toast("Loading the epub " + fileObject, {autoClose:false});
                 zip.loadAsync(fileObject)
-                    .then( (ziploaded)=>{
+                    .then( (ziploaded)=>{ 
                         let newstate = this.state;
                         newstate.epub_loaded = ziploaded;
                         newstate.filetree_loaded = new FileTree(fileObject.name,"");
@@ -167,7 +165,7 @@ class App extends React.Component{
                         }
                         // load the navigation tree from the navigation file of the epub
                         if(newstate.drawer_css.length === 1){
-                            newstate.drawer_css.push("show");
+                            this.showDrawer();
                         }
                         this.setState(newstate);
                         toast.dismiss(this.loadingToastId);
@@ -192,28 +190,30 @@ class App extends React.Component{
         this.setState(newState);
         // realpath without the epub name
         let realPath = filepath.substring(filepath.indexOf("/")+1);
-        // Test to retrieve and transform data from uint8 to text with the
         let dataPromise = newState.filetree_loaded.fetchData(realPath);
-        if(dataPromise){
-            dataPromise.then((data)=>{
-
+        if(dataPromise) dataPromise.then((data)=>{
                 this.setState({
                     value_to_display:data
                 });
             },(error)=>{alert(error)});
-        }
     }
 
-    showOrHideDrawer(){
+    showDrawer(){
+        let newstate = this.state;
+        if(newstate.drawer_css.length <= 1){
+            newstate.drawer_button_css.push("rotate");
+            newstate.drawer_css.push("show");
+            newstate.editor_css.push("with-drawer");
+        }
+        this.setState(newstate);
+    }
+
+    hideDrawer(){
         let newstate = this.state;
         if(newstate.drawer_css.length > 1){
             newstate.drawer_css.pop();
             newstate.drawer_button_css.pop();
             newstate.editor_css.pop();
-        } else {
-            newstate.drawer_button_css.push("rotate");
-            newstate.drawer_css.push("show");
-            newstate.editor_css.push("with-drawer");
         }
         this.setState(newstate);
     }
@@ -295,19 +295,19 @@ class App extends React.Component{
             <ToastContainer />
             <header className="App-header">
                 <button className={this.state.drawer_button_css.join(" ")}
-                        onClick={(event:any) => {this.showOrHideDrawer()}} 
-                    >&#9776;</button>
+                        onClick={(event:any) => {
+                            this.state.drawer_css.length > 1 ? 
+                                this.hideDrawer() : 
+                                this.showDrawer();}} >&#9776;</button>
 
                 <FileInput className="App-button" 
                         mimetype="application/epub+zip"
                         onFileSubmit={(event:any)=>{this.handleEpubSubmit(event)}}
-                        eventRef={this.fileInput}
-                    />
+                        eventRef={this.fileInput} />
                 
                 <button className="App-button"></button>
                 <button className="App-button" 
-                        onClick={(event:any) => {this.changeEditorView()}}
-                    >{switchingView}</button>
+                        onClick={(event:any) => {this.changeEditorView()}}>{switchingView}</button>
             </header>
             <main className="App-frame">
                 <aside className={this.state.drawer_css.join(' ')}>

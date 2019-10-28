@@ -39,6 +39,7 @@ export class EpubFileManager extends React.Component<EpubFileManagerProps, {}> {
                 this.state.current_selected_path === nodePath ?
                 "folder-content file selected":
                 "folder-content file";
+                // <span className="icon">&#x50;</span> to render an icon from the font file
             return <li key={nodePath.replace('/','-')} 
                 className={selected_css}
                 onClick={(event) => {
@@ -50,20 +51,21 @@ export class EpubFileManager extends React.Component<EpubFileManagerProps, {}> {
                 }>{node.name}</li>
         } else { // current node is a tree node (a folder)
              let childrenjsx:JSX.Element[] = [];
-             // Ordered display
+             // Alphabetically sorted rendering
              let orderedNodeKeys = Array.from(node.keys()).sort();
              orderedNodeKeys.forEach((key:string) => {
                  childrenjsx.push(this.renderTree(node.get(key)!));
              });
+             // default non-sorted rendering
              //node.forEach((value:FileTree, key:string) => {
              //    childrenjsx.push(this.renderTree(value));
              //});
              return <li key={nodePath.replace('/','-')}
-                             className="folder"
-                         ><p className="folder-name">{node.name}</p>
-                         <ul key={nodePath.replace('/','-')+"content"} 
-                                 className="folder-content">{childrenjsx}</ul>
-                    </li>;
+                         className="folder"
+                     ><p className="folder-name">{node.name}</p>
+                     <ul key={nodePath.replace('/','-')+"content"} 
+                             className="folder-content">{childrenjsx}</ul>
+                </li>;
         }
     }
 

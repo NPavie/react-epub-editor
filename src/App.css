@@ -1,3 +1,5 @@
+
+
 /* */
 .App {
   text-align: center;
@@ -27,16 +29,25 @@
 .App-frame{
     position:absolute;
     top:35px;
-    bottom: 0;
+    bottom: 35px;
     left: 0;
     right: 0;
 
+}
+
+.App-footer{
+  position: absolute;
+  bottom: 0;
+  left:0;
+  right:0;
+  height: 35px;
 }
 
 .App-link {
   color: #09d3ac;
 }
 
+/*TODO : for small screen make the drawer to overlap the main content instead of extend*/
 .App-drawer{
   position: absolute;
   top:0;
@@ -57,7 +68,8 @@
   text-align: left;
   overflow-y:auto;
   resize: horizontal;
-  padding-right:0px;
+
+  z-index: 10;
 }
 
 .App-drawer.show{
@@ -76,21 +88,6 @@
   -moz-transition: 0.5s;
   -o-transition: 0.5s;
   transition: 0.5s;
-}
-.image-view {
-    overflow-y: scroll;
-    max-width: 99%;
-    max-height: 99%;
-    
-    
-}
-.image-view > img {
-    max-width: 70%;
-    height: auto;
-}
-.displayed-file{
-  margin-bottom: 5px;
-  margin-top: 5px;
 }
 .App-editor.with-drawer{
   margin-left: 20%;
@@ -118,3 +115,20 @@
 
 
 .App-actionBar {}
+
+
+
+
+.image-view {
+    overflow-y: scroll;
+    max-width: 100%;
+    max-height: 95%;
+}
+.image-view > img {
+    max-width: 70%;
+    height: auto;
+}
+.displayed-file{
+  margin-bottom: 5px;
+  margin-top: 5px;
+}

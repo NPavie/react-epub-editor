@@ -18,6 +18,7 @@ interface FileInputProps {
  */
 export class FileInput extends React.Component<FileInputProps, {}> {
 
+
   static defaultProps:FileInputProps = {
         onFileSubmit:(event:any)=>{},
         mimetype:"",
@@ -25,14 +26,22 @@ export class FileInput extends React.Component<FileInputProps, {}> {
         eventRef:React.createRef()
     }
 
-  constructor(props:any) {
-    super(props);
-  }
+    formRef:any;
+    constructor(props:any) {
+      super(props);
+      this.formRef = React.createRef();
+      this.launchSubmit = this.launchSubmit.bind(this);
+    }
+
+    launchSubmit(event:any){
+      this.formRef.current.dispatchEvent(new Event("submit"));
+    }
 
   render() {
     return (
-      <form className={this.props.className} onSubmit={this.props.onFileSubmit}>
-        <input type="file" ref={this.props.eventRef} accept={this.props.mimetype} />
+      <form className={this.props.className} onSubmit={this.props.onFileSubmit} ref={this.formRef}>
+        <label className={this.props.className}>Load an epub : </label>
+        <input type="file" ref={this.props.eventRef} accept={this.props.mimetype}/>
         <button type="submit">Load</button>
       </form>
     );

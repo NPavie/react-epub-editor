@@ -1,6 +1,7 @@
 .folder-content {
     list-style: none;
     margin: 0;
+    margin-left: 5px;
     padding-left: 10px;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -23,11 +24,14 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    padding-left: 10px;
+    font-weight: bold;
+    transition:0.3s;
 
 }
 
 .folder-name:hover {
-    background-color: #b2cae4;
+    background-color: #f99;
     cursor: pointer;
 }
 
@@ -43,9 +47,6 @@
 
 }
 
-
-
-
 @font-face {
   font-family: 'File Icons';
   font-style: normal;
@@ -55,3 +56,6 @@
 }
 /* See https://github.com/file-icons/icons/blob/master/charmap.md */
 
+.icon {
+    font-family: 'File Icons'
+}
